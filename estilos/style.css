@@ -6,6 +6,11 @@
 
 #canvas{
     background-color: burlywood;
-    width: 50vw;
-    border: 1px solid black;
+    width: 100vw;
+    height: 100vh;
+}
+
+html{
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
