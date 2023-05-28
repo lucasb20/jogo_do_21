@@ -1,0 +1,11 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#canvas{
+    background-color: burlywood;
+    width: 50vw;
+    border: 1px solid black;
+}
