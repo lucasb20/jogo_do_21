@@ -19,8 +19,16 @@ class Card{
     }
 }
 
-//drawImage(imagem,posx recorte, posy recorte, tamx recorte, tamy recorte, coord x, coord y, rem x, rem y)
+function build_deck(){
+    const hearts = ['a',2,3,4,5,6,7,8,9,10,'j','q','k']
+    const spades = ['a',2,3,4,5,6,7,8,9,10,'j','q','k']
+    const diamonds = ['a',2,3,4,5,6,7,8,9,10,'j','q','k']
+    const clubs = ['a',2,3,4,5,6,7,8,9,10,'j','q','k']
+    const deck = [hearts,spades,diamonds,clubs]
+}
 
+//drawImage(imagem,posx recorte, posy recorte, tamx recorte, tamy recorte, coord x, coord y, rem x, rem y)
+/* 
 baralho.addEventListener('load',()=>{
     ctx.drawImage(baralho,0,0,card_cutx,card_cuty,20,20,40,62)  
-})
+}) */
