@@ -6,19 +6,19 @@ const canvas_width = 300,canvas_height = 150
 const baralho = document.createElement('img')
 baralho.src = 'imagens/baralho_otim.png'
 
-const card_tamx=100,card_tamy=100
-const card_cutx=80,card_cuty=124
+const card_tamx=45,card_tamy=60
+const card_cutx=79,card_cuty=124
 
-const pdeck_x=60,pdeck_y=90
+const pdeck_x=60,pdeck_y=80
 const hdeck_x=75,hdeck_y=40
 
 const player_hand = [], house_hand =[]
 
-function build_deck(){
-    const deck = []
+const deck = []
+function build_deck(deck){
     for(let i=1;i<=13;i++){
         let aux = []
-        let posx = 0 + (i-1)*(card_tamx)
+        let posx = 0 + (i-1)*(card_cutx)
         let posy = 0
         aux.push('clubs')
         switch(i){
@@ -42,19 +42,17 @@ function build_deck(){
         aux.push(posy)
         deck.push(aux)
     }
-
-    const hearts = ['a',2,3,4,5,6,7,8,9,10,'j','q','k']
-    const spades = ['a',2,3,4,5,6,7,8,9,10,'j','q','k']
-    const diamonds = ['a',2,3,4,5,6,7,8,9,10,'j','q','k']
-    const clubs = ['a',2,3,4,5,6,7,8,9,10,'j','q','k']
-    /* const deck = [hearts,spades,diamonds,clubs] */
 }
 
+baralho.addEventListener('load',init)
 
-
-document.body.onload = ()=>{
+function init(){
     ctx.font = '10px Arial'
     ctx.fillText(`Press D for deal 1 more card, H for hold, and N for new game.`,5,10)
+    build_deck(deck)
+    console.log(deck)
+    ctx.drawImage(baralho,deck[4][2],deck[4][3],card_cutx,card_cuty,pdeck_x,pdeck_y,card_tamx,card_tamy)
+    ctx.drawImage(baralho,deck[5][2],deck[5][3],card_cutx,card_cuty,pdeck_x+10,pdeck_y,card_tamx,card_tamy)
 }
 
 window.addEventListener('keydown',(event) => {
