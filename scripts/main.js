@@ -10,11 +10,15 @@ const card_tamx=45,card_tamy=60
 const card_cutx=79,card_cuty=123
 
 const pdeck_x=60,pdeck_y=80
-const hdeck_x=75,hdeck_y=40
+const hdeck_x=160,hdeck_y=15
 
 const player_hand = [], house_hand =[]
 
 const deck = []
+
+const card_back = [0,0,card_cutx*2,card_cuty*4]
+let state_hold = false
+
 function build_deck(deck){
     for(let i=1;i<=13;i++){
         let aux = []
@@ -125,24 +129,62 @@ function build_deck(deck){
     }
 }
 
+function shuffle(deck){
+    let k,j,aux
+    for(let i=0;i<52;i++){
+        k = Math.floor(Math.random()*52)
+        j = Math.floor(Math.random()*52)
+
+        aux = deck[k]
+        deck[k] = deck[j]
+        deck[j] = aux
+    }
+}
+
+function update(){
+    ctx.clearRect(0,0,canvas_width,canvas_height)
+
+    for(let i=0;i<player_hand.length;i++){
+        draw_card(player_hand[i],pdeck_x+15*i,pdeck_y)
+    }
+
+    if(!state_hold){
+        for(let i=0;i<house_hand.length;i++){
+            if(i==0){
+                draw_card(house_hand[i],hdeck_x+15*i,hdeck_y)
+            }
+            else{
+                draw_card(card_back,hdeck_x+15*i,hdeck_y)
+            }
+        }
+    }
+    else{
+        for(let i=0;i<house_hand.length;i++){
+            draw_card(house_hand[i],hdeck_x+15*i,hdeck_y)
+        }
+    }
+
+    check_winner()
+
+    ctx.font = '10px Arial'
+    ctx.fillText(`Press D for deal 1 more card, H for hold, and N for new game.`,5,10)
+}
+
+function draw_card(card,x,y){
+    ctx.drawImage(baralho,card[2],card[3],card_cutx,card_cuty,x,y,card_tamx,card_tamy)
+}
+
 baralho.addEventListener('load',init)
 
 function init(){
     ctx.font = '10px Arial'
     ctx.fillText(`Press D for deal 1 more card, H for hold, and N for new game.`,5,10)
-    build_deck(deck)
-    console.log(deck)
-    ctx.drawImage(baralho,deck[10][2],deck[10][3],card_cutx,card_cuty,pdeck_x,pdeck_y,card_tamx,card_tamy)
-    ctx.drawImage(baralho,deck[18][2],deck[18][3],card_cutx,card_cuty,pdeck_x+10,pdeck_y,card_tamx,card_tamy)
-    ctx.drawImage(baralho,deck[29][2],deck[29][3],card_cutx,card_cuty,pdeck_x+20,pdeck_y,card_tamx,card_tamy)
-    ctx.drawImage(baralho,deck[39][2],deck[39][3],card_cutx,card_cuty,pdeck_x+30,pdeck_y,card_tamx,card_tamy)
-    ctx.drawImage(baralho,2*card_cutx,4*card_cuty,card_cutx,card_cuty,pdeck_x+40,pdeck_y,card_tamx,card_tamy)
 }
 
 window.addEventListener('keydown',(event) => {
     switch(event.key){
         case 'd':
-            deal()
+            deal(deck,player_hand)
             break
         case 'h':
             hold()
@@ -153,8 +195,32 @@ window.addEventListener('keydown',(event) => {
     }
 })
 
-function deal(){}
+function deal(deck,hand){
+    hand.push(deck[0])
+    deck.shift()
+    update()
+}
 
-function hold(){}
+function hold(){
+    state_hold = true
+    update()
+}
 
-function new_game(){}
+function new_game(){
+    deck.length = 0
+    player_hand.length = 0
+    house_hand.length = 0
+    state_hold = false
+    build_deck(deck)
+    shuffle(deck)
+    deal(deck,player_hand)
+    deal(deck,player_hand)
+    deal(deck,house_hand)
+    deal(deck,house_hand)
+
+    update()
+}
+
+function check_winner(){
+    
+}
