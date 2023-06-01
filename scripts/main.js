@@ -202,14 +202,15 @@ function deal(deck,hand){
 function hold(){
     state_hold = true
     update()
+    ctx.font = '10px Arial'
     if(check_winner()==1){
-        alert('Player wins.')
+        ctx.fillText('Player wins.',230,45)
     }
     else if(check_winner()==-1){
-        alert('House wins.')
+        ctx.fillText('House wins.',230,45)
     }
     else{
-        alert('Draw.')
+        ctx.fillText('Draw.',230,45)
     }
 }
 
