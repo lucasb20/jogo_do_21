@@ -164,8 +164,6 @@ function update(){
         }
     }
 
-    check_winner()
-
     ctx.font = '10px Arial'
     ctx.fillText(`Press D for deal 1 more card, H for hold, and N for new game.`,5,10)
 }
@@ -204,6 +202,15 @@ function deal(deck,hand){
 function hold(){
     state_hold = true
     update()
+    if(check_winner()==1){
+        alert('Player wins.')
+    }
+    else if(check_winner()==-1){
+        alert('House wins.')
+    }
+    else{
+        alert('Draw.')
+    }
 }
 
 function new_game(){
@@ -222,5 +229,49 @@ function new_game(){
 }
 
 function check_winner(){
-    
+    let player_points = 0
+    let house_points = 0
+
+    player_points = calc_hand(player_hand)
+    house_points = calc_hand(house_hand)
+
+    if(player_points>house_points && player_points<=21){
+        return 1
+    }
+    else if(house_points>player_points && house_points<=21){
+        return -1
+    }
+    else{
+        return 0
+    }
+}
+
+function calc_hand(hand){
+    let result=0
+    for(let i=0;i<hand.length;i++){
+        switch(hand[i][1]){
+            case 'j':
+                result+=10;
+                break
+            case 'k':
+                result+=10;
+                break
+            case 'q':
+                result+=10;
+                break
+            case 'a':
+                if(result+11>21){
+                    result+=1
+                }
+                else{
+                    result+=11
+                }
+                break
+            default:
+                result+=hand[i][1]
+                break
+        }
+    }
+
+    return result
 }
