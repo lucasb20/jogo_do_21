@@ -235,10 +235,13 @@ function check_winner(){
     player_points = calc_hand(player_hand)
     house_points = calc_hand(house_hand)
 
-    if(player_points>house_points && player_points<=21){
+    let player_exp = (player_points > 21)?true:false;
+    let house_exp = (house_points > 21)?true:false;
+
+    if((player_points>house_points && player_points<=21)||(!player_exp && house_exp)){
         return 1
     }
-    else if(house_points>player_points && house_points<=21){
+    else if((house_points>player_points && house_points<=21)||(player_exp && !house_exp)){
         return -1
     }
     else{
