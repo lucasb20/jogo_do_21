@@ -251,29 +251,32 @@ function check_winner(){
 
 function calc_hand(hand){
     let result=0
+    let count_a=0
     for(let i=0;i<hand.length;i++){
         switch(hand[i][1]){
             case 'j':
-                result+=10;
+                result+=10
                 break
             case 'k':
-                result+=10;
+                result+=10
                 break
             case 'q':
-                result+=10;
+                result+=10
                 break
             case 'a':
-                if(result+11>21){
-                    result+=1
-                }
-                else{
-                    result+=11
-                }
+                count_a++
                 break
             default:
                 result+=hand[i][1]
                 break
         }
+    }
+
+    if(count_a*11+result>21){
+            result+=1*count_a
+        }
+    else{
+        result+=11*count_a
     }
 
     return result
