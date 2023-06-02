@@ -1,22 +1,26 @@
-let canvas = document.querySelector('#canvas')
-let ctx = canvas.getContext('2d')
+const canvas = document.querySelector('#canvas')
+const ctx = canvas.getContext('2d')
 
-const canvas_width = 300,canvas_height = 150
+canvas.width = 800
+canvas.height = 500
+
+const res_posx=550,res_posy=100
+const txt_posx=100,txt_posy=20
 
 const baralho = document.createElement('img')
 baralho.src = 'imagens/baralho_otim.png'
 
-const card_tamx=40,card_tamy=60
+const card_tamx=80,card_tamy=120
 const card_cutx=79,card_cuty=123
 
-const pdeck_x=60,pdeck_y=80
-const hdeck_x=160,hdeck_y=15
+const hdeck_x=360,hdeck_y=50
 
 const house_hand =[]
 
 let count_player = -1
 
-const p1deck_x = 1, p2deck_x=75, p3deck_x=149, p4deck_x=223
+const pdeck_y=300
+const p1deck_x = 30, p2deck_x=230, p3deck_x=430, p4deck_x=630
 const player1_hand = [], player2_hand = [], player3_hand = [], player4_hand = []
 const all_posx = [p1deck_x,p2deck_x,p3deck_x,p4deck_x]
 const all_hands = [player1_hand,player2_hand,player3_hand,player4_hand]
@@ -151,59 +155,56 @@ function shuffle(deck){
 }
 
 function update(){
-    ctx.clearRect(0,0,canvas_width,canvas_height)
+    ctx.clearRect(0,0,canvas.width,canvas.height)
 
     if(state_hold!=count_player){
-        ctx.fillText(`Player ${turn+1}'s turn.`,25,40)
+        ctx.fillText(`Player ${turn+1}'s turn.`,100,100)
     }
 
     for(let i=0;i<count_player;i++){
         for(let j=0;j<all_hands[i].length;j++){
-            draw_card(all_hands[i][j],all_posx[i]+12*j,pdeck_y)
+            draw_card(all_hands[i][j],all_posx[i]+20*j,pdeck_y)
         }
     }
 
     if(state_hold!=count_player){
         for(let i=0;i<house_hand.length;i++){
             if(i==0){
-                draw_card(house_hand[i],hdeck_x+12*i,hdeck_y)
+                draw_card(house_hand[i],hdeck_x+20*i,hdeck_y)
             }
             else{
-                draw_card(card_back,hdeck_x+12*i,hdeck_y)
+                draw_card(card_back,hdeck_x+20*i,hdeck_y)
             }
         }
     }
     else{
         for(let i=0;i<house_hand.length;i++){
-            draw_card(house_hand[i],hdeck_x+12*i,hdeck_y)
+            draw_card(house_hand[i],hdeck_x+20*i,hdeck_y)
         }
     }
 
-    ctx.font = '10px Arial'
-    ctx.fillText(`Press D for deal 1 more card, H for hold, and N for new game.`,5,10)
+    ctx.font = '20px Arial'
+    ctx.fillText(`Press D for deal 1 more card, H for hold, and N for new game.`,txt_posx,txt_posy)
 
     if(state_hold==count_player){
         if(check_winner()==1){
-            ctx.fillText('Player1 wins.',230,45)
+            ctx.fillText('Player1 wins.',res_posx,res_posy)
         }
         else if(check_winner()==2){
-            ctx.fillText('Player2 wins.',230,45)
+            ctx.fillText('Player2 wins.',res_posx,res_posy)
         }
         else if(check_winner()==3){
-            ctx.fillText('Player3 wins.',230,45)
+            ctx.fillText('Player3 wins.',res_posx,res_posy)
         }
         else if(check_winner()==4){
-            ctx.fillText('Player1 wins.',230,45)
+            ctx.fillText('Player1 wins.',res_posx,res_posy)
         }
         else if(check_winner()==-1){
-            ctx.fillText('House wins.',230,45)
+            ctx.fillText('House wins.',res_posx,res_posy)
         }
         else{
-            ctx.fillText('Draw.',230,45)
+            ctx.fillText('Draw.',res_posx,res_posy)
         }
-        console.log('Counter_player: '+count_player)
-        console.log('State_hold: '+state_hold)
-        console.log('Check_winner: '+check_winner())
     }
 }
 
@@ -214,8 +215,8 @@ function draw_card(card,x,y){
 baralho.addEventListener('load',init)
 
 function init(){
-    ctx.font = '10px Arial'
-    ctx.fillText(`Press D for deal 1 more card, H for hold, and N for new game.`,5,10)
+    ctx.font = '20px Arial'
+    ctx.fillText(`Press D for deal 1 more card, H for hold, and N for new game.`,txt_posx,txt_posy)
 }
 
 window.addEventListener('keydown',(event) => {
